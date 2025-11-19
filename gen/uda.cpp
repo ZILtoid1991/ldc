@@ -14,6 +14,7 @@
 #include "gen/llvmhelpers.h"
 #include "ir/irfunction.h"
 #include "ir/irvar.h"
+#include "uda.h"
 #include "llvm/ADT/StringExtras.h"
 #include "llvm/ADT/StringSwitch.h"
 
@@ -503,8 +504,9 @@ void applyVarDeclUDAs(VarDeclaration *decl, llvm::GlobalVariable *gvar) {
             ident->toChars());
     } else if (ident == Id::udaAssumeUsed) {
       applyAttrAssumeUsed(*gIR, sle, gvar);
-    } else if (ident == Id::udaWeak) {
+    } else if (ident == Id::udaWeak || ident == Id::udaAddrspace) {
       // @weak is applied elsewhere
+      // @addrspace is applied elsewhere
     } else if (ident == Id::udaDynamicCompile ||
                ident == Id::udaDynamicCompileEmit ||
                ident == Id::udaCallingConvention) {
@@ -624,6 +626,17 @@ bool hasCallingConventionUDA(FuncDeclaration *fd,
                  "`@ldc.attributes.callingConvention`",
                  name.str().c_str());
   return success;
+}
+
+/// Checks whether `vd` has the @ldc.attributes.addrspace(int) UDA applied.
+/// Returns true if yes, and sets addrSp to the address space value supplied.
+bool hasAddrspaceUDA(VarDeclaration *vd, unsigned *addrSp) {
+  auto attr = getLastMagicAttribute(vd, Id::udaAddrspace, Id::attributes);
+  if (!attr)
+    return false;
+  checkStructElems(attr, {Type::tint32});
+  *addrSp = (*attr->elements)[0]->toInteger();
+  return true;
 }
 
 /// Checks whether 'sym' has the @ldc.attributes._weak() UDA applied.

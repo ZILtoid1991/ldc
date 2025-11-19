@@ -29,6 +29,7 @@ void applyFuncDeclUDAs(FuncDeclaration *decl, IrFunction *irFunc);
 void applyVarDeclUDAs(VarDeclaration *decl, llvm::GlobalVariable *gvar);
 
 bool hasCallingConventionUDA(FuncDeclaration *fd, llvm::CallingConv::ID *callconv);
+bool hasAddrspaceUDA(VarDeclaration *vd, unsigned *addrSp);
 bool hasWeakUDA(Dsymbol *sym);
 StructLiteralExp *getKernelAttr(Dsymbol *sym);
 /// Must match ldc.dcompute.Compilefor + 1 == DComputeCompileFor
