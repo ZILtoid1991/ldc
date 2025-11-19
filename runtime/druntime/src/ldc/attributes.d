@@ -410,15 +410,15 @@ struct target
  * import ldc.attributes;
  *
  * struct __externref_t {
- *   @AddrSp(10) void* ptr; 
+ *     @addrspace(10) void* ptr;
  * }
  *
  * __externref_t getJSClass(char* classname);
  * ---
  */
-struct AddrSp
+struct addrspace
 {
-    int specifier;
+    uint specifier;
 }
 /++
  + When applied to a global symbol, specifies that the symbol should be emitted
