@@ -402,7 +402,24 @@ struct target
 {
     string specifier;
 }
-
+/**
+ * When attached to a pointer, it turns it into an address space pointer. Used in 
+ * targets like compute and WASM to represent special reference types.
+ * Examples:
+ * ---
+ * import ldc.attributes;
+ *
+ * struct __externref_t {
+ *   @AddrSp(10) void* ptr; 
+ * }
+ *
+ * __externref_t getJSClass(char* classname);
+ * ---
+ */
+struct AddrSp
+{
+    int specifier;
+}
 /++
  + When applied to a global symbol, specifies that the symbol should be emitted
  + with weak linkage. An example use case is a library function that should be
