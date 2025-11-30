@@ -630,7 +630,7 @@ bool hasCallingConventionUDA(FuncDeclaration *fd,
 
 /// Checks whether `vd` has the @ldc.attributes.addrspace(int) UDA applied.
 /// Returns true if yes, and sets addrSp to the address space value supplied.
-bool hasAddrspaceUDA(VarDeclaration *vd, unsigned *addrSp) {
+bool hasAddrspaceUDA(Dsymbol *vd, unsigned *addrSp) {
   auto attr = getLastMagicAttribute(vd, Id::udaAddrspace, Id::attributes);
   if (!attr)
     return false;
