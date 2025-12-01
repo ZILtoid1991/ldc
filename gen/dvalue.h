@@ -45,6 +45,8 @@ class DFuncValue;
 class DValue {
 public:
   Type *const type;
+  /// Annotates address space attached to the type if any, relevant for pointers.
+  unsigned addrspace;
 
   virtual ~DValue() = default;
 

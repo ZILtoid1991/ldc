@@ -59,6 +59,7 @@ bool DValue::definedInFuncEntryBB() { return isDefinedInFuncEntryBB(val); }
 DRValue::DRValue(Type *t, LLValue *v) : DValue(t, v) {
   assert(!DtoIsInMemoryOnly(t) &&
          "Cannot represent memory-only type as DRValue");
+  addrspace = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
